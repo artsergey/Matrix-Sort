@@ -3,7 +3,9 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        printMatrix(randomizeMatrix());
+        int[][] mat = randomizeMatrix();
+        printMatrix(mat);
+        printMatrix(binSort(mat));
 
     }
 
@@ -19,10 +21,31 @@ public class Main {
     }
 
     public static void printMatrix(int[][] mat) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(Arrays.toString(mat[i]));
+        for (int[] ints : mat) {
+            System.out.println(Arrays.toString(ints));
         }
     }
 
-    // bin sort
+    // not space efficient, but should be on the faster side
+    public static int[][] binSort(int[][] mat) {
+        int[][] intCount = new int[9][10]; // a matrix storing count of every integer from 10 to 99 inclusive
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                int n = mat[i][j];
+                intCount[n / 10 - 1][n % 10]++; // 10s are rows, singles are columns
+            }
+        }
+        int[][] sortedMat = new int[10][10];
+        int c = 0; // sorted matrix counter
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 10; j++) {
+                while (intCount[i][j] > 0) {
+                    sortedMat[c / 10][c % 10] = (i + 1) * 10 + j;
+                    c++;
+                    intCount[i][j]--;
+                }
+            }
+        }
+        return sortedMat;
+    }
 }
