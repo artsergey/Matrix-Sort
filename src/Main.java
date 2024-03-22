@@ -4,14 +4,16 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         int[][] mat = randomizeMatrix();
+        System.out.println("Original randomized matrix:");
         printMatrix(mat);
+        System.out.println("Matrix sorted through bins:");
         printMatrix(binSort(mat));
 
     }
 
     public static int[][] randomizeMatrix() {
-        Random rand = new Random();
         int[][] randMatrix = new int[10][10];
+        Random rand = new Random();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 randMatrix[i][j] = rand.nextInt(89) + 10; // couldn't find lower bound definition
@@ -48,4 +50,39 @@ public class Main {
         }
         return sortedMat;
     }
+
+    // doesn't quite work, still needs debugging
+    public static void quickSort(int[][] arr) {
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    private static void quickSort(int[][] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(int[][] arr, int begin, int end) {
+        int pivot = arr[end / 10][end % 10];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j / 10][j % 10] <= pivot) {
+                i++;
+
+                int swapTemp = arr[i / 10][i % 10];
+                arr[i / 10][i % 10] = arr[j / 10][j % 10];
+                arr[j / 10][j % 10] = swapTemp;
+            }
+        }
+
+        int swapTemp = arr[(i+1) / 10][(i+1) % 10];
+        arr[(i+1) / 10][(i+1) % 10] = arr[end / 10][end % 10];
+        arr[end / 10][end % 10] = swapTemp;
+        return i+1;
+    }
+
 }
