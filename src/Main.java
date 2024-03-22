@@ -1,22 +1,24 @@
+!! add package
+
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main {
+public class Main { !! change name
     public static void main(String[] args) {
         int[][] mat = randomizeMatrix();
         System.out.println("Original randomized matrix:");
         printMatrix(mat);
         System.out.println("Matrix sorted through bins:");
-        printMatrix(binSort(mat));
+        printMatrix(binSort(mat)); !!! binSort - koshmariki esli 4esno, esli tisala sama tebe plusik v karmu, esli net - a smysl? davay pusyrkom perepishem
 
     }
 
     public static int[][] randomizeMatrix() {
         int[][] randMatrix = new int[10][10];
-        Random rand = new Random();
+        Random rand = new Random(); !! not create every time, use one instance & initialize with seed - new Random(System.currentTimeMillis())
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                randMatrix[i][j] = rand.nextInt(89) + 10; // couldn't find lower bound definition
+                randMatrix[i][j] = rand.nextInt(89) + 10; // couldn't find lower bound definition !!! magic numbers - introduce constants
             }
         }
         return randMatrix;
